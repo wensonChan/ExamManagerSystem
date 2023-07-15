@@ -18,9 +18,9 @@ public class ExamScheduleDTO {
     private String exam_name;
     private int teacher_id;
     private String room;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date start_time;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date end_time;
 
     public Integer getCourse_id() {

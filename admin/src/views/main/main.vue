@@ -24,7 +24,7 @@
               </el-icon>
               <span>用户管理</span>
             </template>
-            <el-menu-item index="/menber/student">学生管理</el-menu-item>
+            <el-menu-item index="/menber/student" >学生管理</el-menu-item>
             <el-menu-item index="/menber/teacher">老师管理</el-menu-item>
           </el-sub-menu>
 
@@ -109,7 +109,7 @@ export default {
 }
 
 .layout-container-demo .el-aside .logo:hover {
-  background-color: #e0a421;
+  background-color: #69e3cd;
 }
 
 

@@ -2,9 +2,9 @@
   <div class="box">
     <el-button type="primary" style="margin-bottom: 10px;" @click="handleAdd">添加</el-button>
 
-    <el-input v-model="findid" v-on:input="handleSelect" placeholder="输入学号进行搜索" maxlength="10" clearable
+    <el-input v-model="findid" v-on:input="handleSelect" placeholder="输入学号进行搜索" maxlength="25" clearable
               style="padding-bottom: 20px"/>
-    {{ findid }}
+    <!--    {{ findid }}-->
     <el-table :data="tableData" v-loading="loading" border style="width: 100%">
 
       <el-table-column label="学号" align="center">
@@ -15,7 +15,7 @@
 
       <el-table-column label="姓名" align="center">
         <template #default="scope">
-          {{ scope.row.name }}
+          {{ scope.row.stu_name }}
         </template>
       </el-table-column>
 
@@ -51,14 +51,14 @@
   </div>
 
   <el-dialog v-model="dialogStudentVisible" title="学生信息">
-    {{ student }}
+    <!--    {{ student }}-->
     <el-form :model="student">
-      <el-form-item label="学号">
-        <el-input v-model="student.student_id" autocomplete="off"/>
-      </el-form-item>
+      <!--      <el-form-item label="学号">-->
+      <!--        <el-input v-text="student.student_id"  v-model="student.student_id" autocomplete="off"/>-->
+      <!--      </el-form-item>-->
 
       <el-form-item label="姓名">
-        <el-input v-model="student.name" autocomplete="off"/>
+        <el-input v-model="student.stu_name" autocomplete="off"/>
       </el-form-item>
 
       <el-form-item label="密码">
@@ -98,11 +98,11 @@ export default {
     return {
       findid: null,
       temp: true,
-      loading: false,
+      loading: true,
       dialogStudentVisible: false,
-      tableData: [{student_id: 1999010101, name: "test", password: "test", phone: "test", mail: "test"}],
+      tableData: [],
       student: {
-        student_id: null, name: null, password: null, phone: null, mail: null
+        student_id: null, stu_name: null, password: null, phone: null, mail: null
       }
 
     }
@@ -120,9 +120,10 @@ export default {
     handleAdd() {
 
       this.student = {
-        student_id: null, name: null, password: null, phone: null, mail: null
+        student_id: null, stu_name: null, password: null, phone: null, mail: null
       },
-          this.dialogStudentVisible = true;
+          this.student.student_id = 123;
+      this.dialogStudentVisible = true;
       this.temp = true;
     },
 
@@ -136,12 +137,17 @@ export default {
     save() {
 
       if (this.temp == false) {
+
         //编辑操作
-        axios.post('/edu/students/' + this.student.student_id, "name=" + this.student.name
+        axios.post('/edu/students/' + this.student.student_id, "student_id=" + this.student.student_id + "&stu_name=" + this.student.stu_name
             + "&password=" + this.student.password + "&phone=" + this.student.phone
             + "&mail=" + this.student.mail + "&_method=put").then((response) => {
           if (response.data.code == 200) {
             this.dialogStudentVisible = false;
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
             //重新加载信息
             this.loadStudent();
           }
@@ -154,6 +160,10 @@ export default {
           if (response.data.code == 200) {
             this.dialogStudentVisible = false;
             //重新加载信息
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
             this.loadStudent();
           }
         }).catch((error) => {
@@ -163,25 +173,46 @@ export default {
     },
 
     handleDelete(student_id) {
-      //发送delete
-      axios.delete('/edu/students/' + student_id).then((response) => {
-        if (response.data.code == 200) {
-          //重新加载信息
-          this.loadStudent();
-        }
-      }).catch((error) => {
-        console.log(error);
+      this.$confirm('确定要删除该学生吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 用户点击了确定按钮，发送delete请求
+        axios.delete('/edu/students/' + student_id)
+            .then((response) => {
+              if (response.data.code === 200) {
+                this.$message({
+                  message: response.data.msg,
+                  type: 'success'
+                });
+                this.loadStudent();
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+      }).catch(() => {
+        // 用户点击了取消按钮，不执行任何操作
       });
     },
     handleSelect() {//搜索
-      axios.get('/edu/students/'+ this.findid)
-          .then((response) => {
-            this.tableData = response.data.data;
-            this.loading = false;
-          }).catch((error) => {
-      });
+      if (this.findid != "") {
+        axios.get('/edu/students/' + this.findid)
+            .then((response) => {
+              if (response.data.data) {
+                this.tableData = [];
+                this.tableData.push(response.data.data)
+              } else {
+                this.tableData = [];
+              }
+              this.loading = false;
+            }).catch((error) => {
+        });
+      } else this.loadStudent();
     },
-  },
+  }
+  ,
   created() {
     this.loadStudent();
   }

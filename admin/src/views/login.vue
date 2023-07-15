@@ -27,7 +27,7 @@ export default {
   methods: {
     loging() {
       if (this.users.name != null && this.users.password != null) {
-        axios.post('/edu/admin/login', "t_admin=" + this.users.name + "&password=" + this.users.password).then((response) => {
+        axios.post('/edu/admin/login/', "t_admin=" + this.users.name + "&password=" + this.users.password).then((response) => {
               if (response.data.code == 200) {
                 sessionStorage.setItem("adminName", this.users.name);
                 this.$router.replace("/main", "");
@@ -36,10 +36,10 @@ export default {
           alert("登陆失败")
         });
       } else alert("账号或密码未输入")
-      if (this.users.name == 123 && this.users.password == 123) {
-        sessionStorage.setItem("adminName", this.users.name);
-        this.$router.replace("/main", "");
-      }
+      // if (this.users.name == 123 && this.users.password == 123) {
+      //   sessionStorage.setItem("adminName", this.users.name);
+      //   this.$router.replace("/main", "");
+      // }
     }
   }
 }

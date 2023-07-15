@@ -2,9 +2,9 @@
   <div class="box">
     <el-button type="primary" style="margin-bottom: 10px;" @click="handleAdd">添加</el-button>
 
-    <el-input v-model="findid" v-on:input="handleSelect" placeholder="输入教师号进行搜索" maxlength="10" clearable
+    <el-input v-model="findid" v-on:input="handleSelect" placeholder="输入教师号进行搜索" maxlength="25" clearable
               style="padding-bottom: 20px"/>
-    {{ findid }}
+<!--    {{ findid }}-->
     <el-table :data="tableData" v-loading="loading" border style="width: 100%">
 
       <el-table-column label="教师号" align="center">
@@ -50,12 +50,12 @@
     </el-table>
   </div>
 
-  <el-dialog v-model="dialogTeacherVisible" title="学生信息">
-    {{ teacher }}
+  <el-dialog v-model="dialogTeacherVisible" title="教师信息">
+<!--    {{ teacher }}-->
     <el-form :model="teacher">
-      <el-form-item label="学号">
-        <el-input v-model="teacher.teacher_id" autocomplete="off"/>
-      </el-form-item>
+      <!--      <el-form-item label="老师编号">-->
+      <!--&lt;!&ndash;        <el-text v-text="'******'" v-model="teacher.teacher_id" autocomplete="off"/>&ndash;&gt;-->
+      <!--      </el-form-item>-->
 
       <el-form-item label="姓名">
         <el-input v-model="teacher.name" autocomplete="off"/>
@@ -98,9 +98,9 @@ export default {
     return {
       findid: null,
       temp: true,
-      loading: false,
+      loading: true,
       dialogTeacherVisible: false,
-      tableData: [{teacher_id: 1999010101, name: "test", password: "test", phone: "test", mail: "test"}],
+      tableData: [],
       teacher: {
         teacher_id: null, name: null, password: null, phone: null, mail: null
       }
@@ -122,7 +122,8 @@ export default {
       this.teacher = {
         teacher_id: null, name: null, password: null, phone: null, mail: null
       },
-          this.dialogTeacherVisible = true;
+          this.teacher.teacher_id = 123;
+      this.dialogTeacherVisible = true;
       this.temp = true;
     },
 
@@ -137,12 +138,17 @@ export default {
 
       if (this.temp == false) {
         //编辑操作
-        axios.post('/edu/teachers/' + this.teacher.teacher_id, "name=" + this.teacher.name
+
+        axios.post('/edu/teachers/' + this.teacher.teacher_id, "teacher_id=" + this.teacher.teacher_id + "&name=" + this.teacher.name
             + "&password=" + this.teacher.password + "&phone=" + this.teacher.phone
             + "&mail=" + this.teacher.mail + "&_method=put").then((response) => {
           if (response.data.code == 200) {
             this.dialogTeacherVisible = false;
             //重新加载信息
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
             this.loadTeacher();
           }
         }).catch((error) => {
@@ -154,6 +160,10 @@ export default {
           if (response.data.code == 200) {
             this.dialogTeacherVisible = false;
             //重新加载信息
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
             this.loadTeacher();
           }
         }).catch((error) => {
@@ -163,23 +173,48 @@ export default {
     },
 
     handleDelete(teacher_id) {
-      //发送delete
-      axios.delete('/edu/teachers/' + teacher_id).then((response) => {
-        if (response.data.code == 200) {
-          //重新加载信息
-          this.loadTeacher();
-        }
-      }).catch((error) => {
-        console.log(error);
+      this.$confirm('确定要删除该教师吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 用户点击了确定按钮，发送delete请求
+        axios.delete('/edu/teachers/' + teacher_id)
+            .then((response) => {
+              if (response.data.code === 200) {
+                this.$message({
+                  message: response.data.msg,
+                  type: 'success'
+                });
+                this.loadTeacher();
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+      }).catch(() => {
+        // 用户点击了取消按钮，不执行任何操作
       });
     },
     handleSelect() {//搜索
-      axios.get('/edu/teachers/' + this.findid)
+      axios.get('/edu/teachers/'+ this.findid)
           .then((response) => {
-            this.tableData = response.data.data;
+            if(response.data.data) {
+              this.tableData=[];
+              this.tableData.push(response.data.data)
+              // this.$message({
+              //   message: response.data.msg,
+              //   type: 'success'
+              // });
+            }else{
+              this.tableData=[];
+            }
             this.loading = false;
           }).catch((error) => {
       });
+      if(this.findid==""){
+        this.loadTeacher();
+      }
     },
   },
   created() {
