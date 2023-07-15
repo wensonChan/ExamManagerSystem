@@ -30,7 +30,7 @@
     </delete>
 
     <update id="updateById" parameterType="teacher">
-        update t_student
+        update t_teacher
         <trim prefix="set" suffixOverrides=",">
             <if test="name != null and name != ''">
                 name = #{name},

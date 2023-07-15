@@ -28,11 +28,21 @@ export default {
     loging() {
       if (this.users.name != null && this.users.password != null) {
         axios.post('/edu/teacher/idLogin', "teacher_id=" + this.users.name + "&password=" + this.users.password).then((response) => {
-              if (response.data.code == 200) {
-                sessionStorage.setItem("teacherName", this.users.name);
-                this.$router.replace("/main", "");
-              }
-            }).catch((error) => {
+          if (response.data.code == 200) {
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
+            sessionStorage.setItem("teacherName", this.users.name);
+            this.$router.replace("/main", "");
+          }
+          if (response.data.code == 401) {
+            this.$message({
+              message: response.data.msg,
+              type: 'warning'
+            });
+          }
+        }).catch((error) => {
           alert("登陆失败")
         });
       } else alert("账号或密码未输入")

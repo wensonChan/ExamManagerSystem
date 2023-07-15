@@ -4,12 +4,11 @@
     <div class="right">
       <h4>修改密码</h4>
       <form action="">
-        {{ users }}
         <input class="acc" v-model="users.oldpassword" name="pw" type="password" placeholder="旧密码" autocomplete="off"
                required>
         <input class="acc" v-model="users.newpassword" name="pw" type="text" placeholder="新密码" autocomplete="off"
                required>
-        <input class="submit" type="submit" value="Reg" v-on:click.prevent="reging">
+        <input class="submit" type="submit" value="修改" v-on:click.prevent="reging">
       </form>
       <div class="fn">
         <router-link to="/login">登录</router-link>
@@ -21,42 +20,59 @@
 <script>
 import axios from "axios"
 import qs from "qs"
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 
 export default {
   name: "reg",
   data() {
     return {
       teacherName: null,
-      users: {name: null, oldpassword: null, newpassword: null}
+      users: {name: null, oldpassword: null, newpassword: null},
+      teacherdata:[],
     }
   },
   methods: {
+    loadTeacher() {
+      axios.get('/edu/teachers/'+ this.teacherName)
+          .then((response) => {
+            this.teacherdata = response.data.data;
+          }).catch((error) => {
+      });
+    },
+
     reging() {
       this.users.name = this.teacherName
+      console.log(this.teacherdata)
       if (this.users.oldpassword != null && this.users.newpassword != null) {
         this.users.oldpassword = this.users.oldpassword.replace(/\s*/g, "")
         this.users.newpassword = this.users.newpassword.replace(/\s*/g, "")
         if (this.users.name != "" && this.users.password != "") {
-          axios.post('/edu/teachers/', "name=" + this.users.name + "&password=" + this.users.oldpassword).then((response) => {
+          axios.post('/edu/teacher/idLogin', "teacher_id=" + this.users.name + "&password=" + this.users.oldpassword).then((response) => {
             if (response.data.code == 200) {
-              axios.post('/edu/teachers/', "&newpassword=" + this.users.newpassword).then((response) => {
+              axios.post('/edu/teachers/'+this.teacherName, "teacher_id=" + this.teacherName + "&name=" + this.teacherdata.name
+                  + "&password=" + this.users.newpassword + "&phone=" + this.teacherdata.phone
+                  + "&mail=" + this.teacherdata.mail + "&_method=put").then((response) => {
                 if (response.data.code == 200) {
-                  sessionStorage.setItem("teacherName", this.users.name);
-                  this.$router.replace("/main", "");
+                  this.$message({
+                    message: "密码修改成功",
+                    type: 'success'
+                  });
+                  this.$router.replace("/login", "");
                 }
               }).catch((error) => {
                 alert("修改失败")
               });
             }
           }).catch((error) => {
-            alert("修改失败")
+            alert("原密码错误")
           });
         } else alert("账号或密码为空")
       } else alert("账号或密码未输入")
     }
   },
   created() {
-    this.teacherName = sessionStorage.getItem("teacherName")
+    this.teacherName = sessionStorage.getItem("teacherName");
+    this.loadTeacher();
   }
 
 }
@@ -190,11 +206,11 @@ export default {
 }
 
 .box .left {
-  font-size: 100px;
+  font-size: 70px;
   text-align: center;
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  padding-top: 80px;
-  padding-right: 90px;
+  padding-top: 25px;
+  padding-right: 180px;
 }
 </style>

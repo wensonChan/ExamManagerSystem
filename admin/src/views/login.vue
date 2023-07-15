@@ -28,11 +28,15 @@ export default {
     loging() {
       if (this.users.name != null && this.users.password != null) {
         axios.post('/edu/admin/login/', "t_admin=" + this.users.name + "&password=" + this.users.password).then((response) => {
-              if (response.data.code == 200) {
-                sessionStorage.setItem("adminName", this.users.name);
-                this.$router.replace("/main", "");
-              }
-            }).catch((error) => {
+          if (response.data.code == 200) {
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
+            sessionStorage.setItem("adminName", this.users.name);
+            this.$router.replace("/main", "");
+          }
+        }).catch((error) => {
           alert("登陆失败")
         });
       } else alert("账号或密码未输入")

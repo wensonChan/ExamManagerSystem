@@ -4,7 +4,6 @@
     <div class="right">
       <h4>修改密码</h4>
       <form action="">
-        {{ users }}
         <input class="acc" v-model="users.oldpassword" name="pw" type="password" placeholder="旧密码" autocomplete="off"
                required>
         <input class="acc" v-model="users.newpassword" name="pw" type="text" placeholder="新密码" autocomplete="off"
