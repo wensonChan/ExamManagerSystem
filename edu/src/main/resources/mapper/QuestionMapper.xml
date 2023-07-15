@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.neu.edu.mapper.QuestionMapper">
+
+    <select id="findAll" resultType="QuestionVO">
+        select * from t_question
+    </select>
+
+    <select id="findById"  resultType="QuestionVO">
+        select * from t_question where subject_id = #{subject_id}
+    </select>
+
+    <insert id="add" parameterType="Question">
+        insert into t_question
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            question_id, title, score, type, answer, subject_id, `option`
+        </trim>
+
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            #{question_id},#{title},#{score},#{type},#{answer},#{subject_id},#{option}
+        </trim>
+    </insert>
+
+
+    <delete id="deleteById" parameterType="int">
+        delete  from t_question where question_id=#{question_id}
+    </delete>
+
+    <update id="updateById" parameterType="Question">
+
+        update t_question
+        <trim prefix="set" suffixOverrides=",">
+            <if test="subject_id != null">
+                subject_id = #{subject_id},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="score != null">
+                score = #{score},
+            </if>
+            <if test="answer != null and answer != ''">
+                answer = #{answer},
+            </if>
+            <if test="option != null and option != ''">
+                `option` = #{option},
+            </if>
+        </trim>
+        <where>
+            <if test="question_id != null">
+                question_id = #{question_id}
+            </if>
+        </where>
+    </update>
+
+
+
+</mapper>

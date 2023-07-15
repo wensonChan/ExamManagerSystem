@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.neu.edu.mapper.ExamScheduleMapper">
+
+    <select id="findBySelection" resultType="examScheduleVO" parameterType="examScheduleDTO">
+        select* from t_exam_schedule
+
+        <where>
+        <if test="exam_name!=null and exam_name!=''">
+            exam_name = #{exam_name}
+        </if>
+        </where>
+    </select>
+
+
+    <select id="findByName"  resultType="examScheduleVO">
+        select * from t_exam_schedule where exam_name = #{exam_name}
+    </select>
+
+    <insert id="add" parameterType="examSchedule">
+        insert into t_exam_schedule
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            course_id, exam_name, teacher_id, room, start_time, end_time
+        </trim>
+
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            #{course_id},#{exam_name},#{teacher_id},#{room},#{start_time},#{end_time}
+        </trim>
+    </insert>
+
+    <delete id="deleteById" parameterType="int">
+        delete from t_exam_schedule
+        where course_id = #{course_id}
+        and start_time > CURRENT_TIMESTAMP
+    </delete>
+
+
+    <update id="updateById" parameterType="examSchedule">
+        update t_exam_schedule
+        <trim prefix="set" suffixOverrides=",">
+            <if test="exam_name != null and exam_name != ''">
+                exam_name = #{exam_name},
+            </if>
+            <if test="teacher_id != null">
+                teacher_id = #{teacher_id},
+            </if>
+            <if test="room != null and room != ''">
+                room = #{room},
+            </if>
+            <if test="start_time != null">
+                start_time = #{start_time},
+            </if>
+            <if test="end_time != null">
+                end_time = #{end_time},
+            </if>
+        </trim>
+
+        <where>
+            <if test="course_id!=null">
+                course_id = #{course_id}
+            </if>
+        </where>
+    </update>
+</mapper>
