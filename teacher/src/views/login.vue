@@ -45,7 +45,13 @@ export default {
         }).catch((error) => {
           alert("登陆失败")
         });
-      } else alert("账号或密码未输入")
+      } else {
+        this.$message({
+          message: "账号或密码未输入",
+          type: 'warning'
+        });
+      }
+
     }
   }
 }
