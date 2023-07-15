@@ -56,7 +56,6 @@
   </el-dialog>
 
   <el-dialog v-model="dialogExamDataVisible" title="考试信息">
-    {{ examData }}
     <el-form :model="examData">
 
       <el-form-item label="考试名称">

@@ -31,7 +31,7 @@
 
       <el-table-column label="操作" align="center">
         <template #default="scope">
-          <el-button size="small" type="danger" @click="handleDelete(scope.row.course_id)">
+          <el-button size="small" type="danger" @click="handleDelete(scope.row.title_id)">
             删除
           </el-button>
         </template>
