@@ -1,8 +1,7 @@
 <template>
   <div class="box">
-    <el-input v-model="findid" v-on:input="handleSelect" placeholder="输入课程号进行搜索" clearable
+    <el-input v-model="findid" v-on:input="handleSelect" placeholder="输入考试名称进行搜索" clearable
               style="padding-bottom: 20px"/>
-    {{ findid }}
     <el-table :data="tableData" v-loading="loading" border style="width: 100%">
 
       <el-table-column label="课程号" align="center">
@@ -57,7 +56,6 @@
   </div>
 
   <el-dialog v-model="dialogExamDataVisible" title="考试信息">
-    {{ examData }}
     <el-form :model="examData">
 
       <el-form-item label="考试名称">
@@ -97,7 +95,6 @@
 </style>
 <script>
 import axios from "axios"
-import qs from "qs"
 
 export default {
   name: "List",

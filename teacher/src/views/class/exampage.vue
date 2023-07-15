@@ -4,7 +4,6 @@
     <el-button type="primary" style="margin-bottom: 10px;" @click="handleAdd">添加</el-button>
     <el-input v-model="findid" v-on:input="handleSelect" placeholder="输入课程号进行搜索" maxlength="10" clearable
               style="padding-bottom: 20px"/>
-    {{ findid }}
     <el-table :data="tableData" v-loading="loading" border style="width: 100%">
 
       <el-table-column label="题目编号" align="center">
@@ -65,7 +64,6 @@
   </div>
   <el-dialog v-model="dialogFormVisible" title="保存题库">
     <el-form :model="questionData">
-      {{ questionData }}
       <el-form-item label="课程名">
 
         <el-select v-model="questionData.subject_id" placeholder="请选择学科">
@@ -92,7 +90,7 @@
       <div v-if="questionData.type==0">
         <el-form-item label="　　">
           <el-input v-model="optionItem" style="width: 60px" size="small" placeholder="选项"/>
-          <el-button size="small" style="margin: 0px 20px;" v-on:click="handleSaveOption">保存</el-button>
+          <el-button size="small" style="margin: 0 20px;" v-on:click="handleSaveOption">保存</el-button>
         </el-form-item>
 
         <el-form-item label="选项">

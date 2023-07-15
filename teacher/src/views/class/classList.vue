@@ -3,7 +3,7 @@
     <el-button type="primary" style="margin-bottom: 10px;" @click="handleAdd">添加</el-button>
     <el-input v-model="findid" v-on:input="handleSelect" placeholder="输入老师号进行搜索" maxlength="10" clearable
               style="padding-bottom: 20px"/>
-    {{ findid }}
+
     <el-table :data="tableData" v-loading="loading" border style="width: 100%">
 
       <el-table-column label="课程号" align="center">
@@ -41,7 +41,6 @@
   </div>
 
   <el-dialog v-model="dialogSubjectVisible" title="课程录入">
-    {{ subject }}
     <el-form :model="subject">
       <el-form-item label="课程名">
         <el-input v-model="subject.name" autocomplete="off"/>
@@ -98,7 +97,6 @@
 <script>
 import axios from "axios"
 import qs from "qs"
-import Login from "@/views/login.vue";
 
 export default {
   name: "List",
@@ -134,8 +132,7 @@ export default {
 
       this.subject = {
         subject_id: null, name: null, teacher_id: this.teacherName
-      },
-
+      };
           this.dialogSubjectVisible = true;
     },
 

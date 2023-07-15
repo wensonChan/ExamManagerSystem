@@ -2,9 +2,7 @@
   <div class="box">
 
     <el-button type="primary" style="margin-bottom: 10px;" @click="handleAdd">添加</el-button>
-    <el-input v-model="findid" v-on:input="handleSelect" placeholder="输入试卷编号进行搜索" maxlength="10" clearable
-              style="padding-bottom: 20px"/>
-    {{ findid }}
+
     <el-table :data="tableData" v-loading="loading" border style="width: 100%">
 
       <el-table-column label="试卷编号" align="center">
@@ -42,7 +40,6 @@
   </div>
 
   <el-dialog v-model="dialogExampaperVisible" title="试卷制作">
-    {{ exampaper }}
     <el-form :model="exampaper">
 
       <el-form-item label="试卷编号">
@@ -115,7 +112,7 @@ export default {
     },
 
     loadquestion() {
-      axios.get('/edu/questions/'+this.exampaper.course_id)
+      axios.get('/edu/questions/' + this.exampaper.course_id)
           .then((response) => {
             this.questionList = response.data.data
             //将options属性的值转成json对象

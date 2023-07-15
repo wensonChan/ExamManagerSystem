@@ -1,9 +1,6 @@
 <template>
   <div class="box">
 
-    <el-input v-model="findid" v-on:input="handleSelect" placeholder="输入学号进行搜索" maxlength="10" clearable
-              style="padding-bottom: 20px"/>
-    {{ findid }}
     <el-table :data="tableData" v-loading="loading" border style="width: 100%">
 
       <el-table-column label="学号" align="center">
@@ -35,7 +32,6 @@
   </div>
 
   <el-dialog v-model="dialogElectiveVisible" title="成绩录入">
-    {{ elective }}
     <el-form :model="elective">
       <el-form-item label="学号">
         <el-text v-model="elective.student_id" v-text="elective.student_id" autocomplete="off"/>
@@ -69,7 +65,6 @@
 </style>
 <script>
 import axios from "axios"
-import qs from "qs"
 
 export default {
   name: "List",
