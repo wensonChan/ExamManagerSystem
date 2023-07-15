@@ -140,6 +140,10 @@ export default {
         if (response.data.code == 200) {
           this.dialogExamDataVisible = false;
           //重新加载信息
+          this.$message({
+            message: response.data.msg,
+            type: 'success'
+          });
           this.loadExamData();
         }
       }).catch((error) => {
@@ -152,6 +156,10 @@ export default {
       axios.delete('/edu/schedules/' + course_id).then((response) => {
         if (response.data.code == 200) {
           //重新加载信息
+          this.$message({
+            message: response.data.msg,
+            type: 'success'
+          });
           this.loadExamData();
         }
         if (response.data.code == 500) {

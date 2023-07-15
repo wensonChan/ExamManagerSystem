@@ -215,6 +215,10 @@ export default {
             "&subject_id=" + this.questionData.subject_id + "&option=" + this.questionData.option + "&question_id=" + this.questionData.question_id+ "&_method=put").then((response) => {
           if (response.data.code == 200) {
             this.dialogFormVisible = false;
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
             this.loadquestion();
           }
         }).catch((error) => {
@@ -231,6 +235,10 @@ export default {
         axios.post('/edu/questions/', param).then((response) => {
           if (response.data.code == 200) {
             this.dialogFormVisible = false;
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
             this.loadquestion();
           }
         }).catch((error) => {
@@ -243,6 +251,10 @@ export default {
       axios.delete('/edu/questions/' + id).then((response) => {
         if (response.data.code == 200) {
           //重新加载学科信息
+          this.$message({
+            message: response.data.msg,
+            type: 'success'
+          });
           this.loadquestion();
         }
       }).catch((error) => {

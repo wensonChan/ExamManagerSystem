@@ -102,6 +102,10 @@ export default {
         if (response.data.code == 200) {
           this.dialogElectiveVisible = false;
           //重新加载信息
+          this.$message({
+            message: response.data.msg,
+            type: 'success'
+          });
           this.loadElective();
         }
       }).catch((error) => {

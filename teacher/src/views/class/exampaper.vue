@@ -148,8 +148,18 @@ export default {
         if (response.data.code == 200) {
           this.dialogExampaperVisible = false;
           // 重新加载信息
+          this.$message({
+            message: response.data.msg,
+            type: 'success'
+          });
           this.loadExampaper();
         }
+        if(response.data.code == 401){
+          this.$message({
+          message: response.data.msg,
+          type: 'warning'
+        });}
+
       })
           .catch((error) => {
             console.log(error);
@@ -162,6 +172,10 @@ export default {
       axios.delete('/edu/exampapers/' + id).then((response) => {
         if (response.data.code == 200) {
           //重新加载信息
+          this.$message({
+            message: response.data.msg,
+            type: 'success'
+          });
           this.loadExampaper();
         }
       }).catch((error) => {

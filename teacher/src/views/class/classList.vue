@@ -158,6 +158,10 @@ export default {
         axios.post('/edu/subjects/' + this.subject.subject_id, "name=" + this.subject.name + "&teacher_id=" + this.subject.teacher_id + "&_method=put").then((response) => {
           if (response.data.code == 200) {
             this.dialogSubjectVisible = false;
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
             //重新加载信息
             this.loadSubject();
           }
@@ -170,6 +174,10 @@ export default {
           if (response.data.code == 200) {
             this.dialogSubjectVisible = false;
             //重新加载信息
+            this.$message({
+              message: response.data.msg,
+              type: 'success'
+            });
             this.loadSubject();
           }
         }).catch((error) => {
@@ -186,7 +194,10 @@ export default {
         if (response.data.code == 200) {
           this.dialogExamDataVisible = false;
           //重新加载信息
-          alert("添加成功")
+          this.$message({
+            message: response.data.msg,
+            type: 'success'
+          });
           this.loadExamData();
         }
         if (response.data.code == 500) {
@@ -202,9 +213,14 @@ export default {
 
     handleDelete(id) {
       //发送delete
+
       axios.delete('/edu/subjects/' + id).then((response) => {
         if (response.data.code == 200) {
           //重新加载信息
+          this.$message({
+            message: response.data.msg,
+            type: 'success'
+          });
           this.loadSubject();
         }
         if (response.data.code == 500) {
