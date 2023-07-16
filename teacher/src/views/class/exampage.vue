@@ -21,8 +21,8 @@
       <el-table-column label="题目类型" align="center">
         <template #default="scope">
           <template v-if="scope.row.type==0">选择题</template>
-          <template v-else-if="scope.row.type==1">判断题</template>
-          <template v-else-if="scope.row.type==2">填空题</template>
+          <template v-else-if="scope.row.type==1">填空题</template>
+          <template v-else-if="scope.row.type==2">简答题</template>
           <template v-else>其他题</template>
         </template>
       </el-table-column>

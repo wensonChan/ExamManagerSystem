@@ -30,6 +30,18 @@ public class ScoreServiceImpl implements ScoreService{
         return resultModel;
     }
 
+
+    @Override
+    public ResultModel<List<ScoreVO>> find(int id){
+        ResultModel<List<ScoreVO>> resultModel = new ResultModel<List<ScoreVO>>();
+        List<ScoreVO> scoreVOList = scoreMapper.find(id);
+        resultModel.setCode(200);
+        resultModel.setMsg("查询该老师所授课程的学生成绩成功");
+        resultModel.setData(scoreVOList);
+        return resultModel;
+    }
+
+
     @Override
     public ResultModel updateById(ScoreDTO scoreDTO) {
 

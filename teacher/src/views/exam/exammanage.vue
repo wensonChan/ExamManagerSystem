@@ -103,6 +103,7 @@ export default {
     return {
       findid: null,
       loading: true,
+      teacherName: null,
       dialogExamDataVisible: false,
       time: [],
       tableData: [],
@@ -115,7 +116,7 @@ export default {
   methods: {
     loadExamData() {
 
-      axios.get('/edu/schedules')
+      axios.get('/edu/schedules/' +this.teacherName)
           .then((response) => {
             this.tableData = response.data.data;
             this.loading = false;
@@ -174,7 +175,7 @@ export default {
     },
 
     handleSelect() {
-      axios.get('/edu/schedules' +"?exam_name="+this.findid)
+      axios.get('/edu/schedules/' +this.teacherName)
           .then((response) => {
             this.tableData = response.data.data;
             this.loading = false;
@@ -185,7 +186,9 @@ export default {
 
 
   created() {
+    this.teacherName = sessionStorage.getItem("teacherName")
     this.loadExamData();
+
   }
 }
 </script>

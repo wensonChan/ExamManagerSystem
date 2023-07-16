@@ -10,12 +10,15 @@
         select* from t_exam_schedule
 
         <where>
-        <if test="exam_name!=null and exam_name!=''">
-            exam_name = #{exam_name}
-        </if>
+            <if test="exam_name!=null and exam_name!=''">
+                exam_name = #{exam_name}
+            </if>
         </where>
     </select>
 
+    <select id="findById" resultType="examScheduleVO">
+        select * from t_exam_schedule where teacher_id = #{teacher_id}
+    </select>
 
     <select id="findByName"  resultType="examScheduleVO">
         select * from t_exam_schedule where exam_name = #{exam_name}

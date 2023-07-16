@@ -21,6 +21,11 @@ public class ScoreController {
         return scoreService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public ResultModel<List<ScoreVO>> find(@PathVariable("id") int id){
+        return scoreService.find(id);
+    }
+
     @PutMapping("/{id}")
     public ResultModel updateById(@PathVariable("id") int id, ScoreDTO scoreDTO){
         return scoreService.updateById(scoreDTO);

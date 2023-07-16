@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ScoreMapper {
     List<ScoreVO> findAll();
-
+    List<ScoreVO> find(int id);
     int updateById(Score score);
 
 }

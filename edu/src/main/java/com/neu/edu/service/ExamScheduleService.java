@@ -18,6 +18,8 @@ import java.util.List;
 public interface ExamScheduleService {
     ResultModel<List<ExamScheduleVO>> findBySelection(ExamScheduleDTO examScheduleDTO);
 
+    ResultModel<List<ExamScheduleVO>> findById(int teacher_id);
+
     ResultModel add(ExamScheduleDTO examScheduleDTO);
 
     ResultModel deleteById(int course_id) throws BusinessException;

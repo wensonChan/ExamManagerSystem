@@ -21,7 +21,10 @@ public class ExamScheduleController {
     public ResultModel<List<ExamScheduleVO>> findBySelection(ExamScheduleDTO examScheduleDTO){
         return examScheduleService.findBySelection(examScheduleDTO);
     }
-
+    @GetMapping("/{id}")
+    public ResultModel<List<ExamScheduleVO>> findById(@PathVariable("id") int teacher_id){
+        return examScheduleService.findById(teacher_id);
+    }
     @PostMapping("")
     public ResultModel add(ExamScheduleDTO examScheduleDTO){
         return examScheduleService.add(examScheduleDTO);

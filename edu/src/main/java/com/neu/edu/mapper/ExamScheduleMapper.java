@@ -18,6 +18,8 @@ import java.util.List;
 public interface ExamScheduleMapper {
     List<ExamScheduleVO> findBySelection(ExamScheduleDTO examScheduleDTO);
 
+    List<ExamScheduleVO> findById(int teacherId);
+
     int add(ExamSchedule examSchedule);
 
     int deleteById(int course_id);

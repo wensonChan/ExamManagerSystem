@@ -33,6 +33,22 @@ public class ExamScheduleServiceImpl implements ExamScheduleService {
         return resultModel;
     }
 
+
+    @Override
+    public ResultModel<List<ExamScheduleVO>> findById(int teacher_id) {
+        ResultModel<List<ExamScheduleVO>> resultModel = new ResultModel<List<ExamScheduleVO>>();
+        List<ExamScheduleVO> ExamScheduleList = examScheduleMapper.findById(teacher_id);
+        if (ExamScheduleList == null) {
+            resultModel.setCode(401);
+            resultModel.setMsg("查询问题失败");
+        }else{
+            resultModel.setCode(200);
+            resultModel.setMsg("查询问题成功");
+            resultModel.setData(ExamScheduleList);
+        }
+        return resultModel;
+    }
+
     @Override
     public ResultModel add(ExamScheduleDTO examScheduleDTO) {
 

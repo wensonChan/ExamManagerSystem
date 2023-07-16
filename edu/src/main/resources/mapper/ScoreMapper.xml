@@ -9,6 +9,12 @@
         select * from t_electives
     </select>
 
+    <select id="find" parameterType="int" resultType="scoreVO">
+        select * from t_electives where (subject_id) IN (SELECT subject_id FROM t_subject where teacher_id = #{teacher_id})
+    </select>
+
+
+
     <update id="updateById" parameterType="scoreVO">
         update t_electives set score = #{score} where student_id = #{student_id} and subject_id = #{subject_id}
     </update>

@@ -73,6 +73,7 @@ export default {
     return {
       findid: null,
       loading: true,
+      teacherName: null,
       dialogElectiveVisible: false,
       tableData: [],
       elective: {
@@ -84,7 +85,7 @@ export default {
   },
   methods: {
     loadElective() {
-      axios.get('/edu/scores')
+      axios.get('/edu/scores/'+this.teacherName)
           .then((response) => {
             this.tableData = response.data.data;
             this.loading = false;
@@ -125,6 +126,7 @@ export default {
   },
 
   created() {
+    this.teacherName = sessionStorage.getItem("teacherName")
     this.loadElective();
   }
 }

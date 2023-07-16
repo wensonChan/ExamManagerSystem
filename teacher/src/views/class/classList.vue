@@ -120,7 +120,7 @@ export default {
   },
   methods: {
     loadSubject() {
-      axios.get('/edu/subjects')
+      axios.get('/edu/subjects/'+this.teacherName)
           .then((response) => {
             this.tableData = response.data.data;
             this.loading = false;
@@ -244,8 +244,8 @@ export default {
   },
 
   created() {
-    this.loadSubject();
     this.teacherName = sessionStorage.getItem("teacherName")
+    this.loadSubject();
   }
 }
 </script>
