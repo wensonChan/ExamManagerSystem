@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.learn.mapper.SubjectMapper">
+
+    <select id="findAll" resultType="subjectVO">
+        SELECT subject_id ,t_subject.`name` ,t_teacher.`name` as 'teacher_name' FROM `t_subject`,t_teacher where t_subject.teacher_id = t_teacher.teacher_id
+    </select>
+
+    <select id="findByName" resultType="subjectVO" parameterType="java.lang.String">
+        SELECT subject_id ,t_subject.`name` ,t_teacher.`name` as 'teacher_name' FROM `t_subject`,t_teacher
+        where t_subject.teacher_id = t_teacher.teacher_id and t_teacher.`name` = #{name}
+    </select>
+
+
+</mapper>

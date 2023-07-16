@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.learn.mapper.FinExamMapper">
+
+    <select id="findAll" resultType="finExamVO" parameterType="int">
+        select student_id,t_electives.subject_id,name as 'subject_name',score from t_electives,t_subject where t_electives.subject_id
+            in(SELECT subject_id  FROM t_exam_answer,t_subject
+            where student_id = #{student_id} and t_subject.subject_id = t_exam_answer.course_id  group by subject_id)
+            and t_subject.subject_id = t_electives.subject_id and student_id = #{student_id}
+    </select>
+
+
+</mapper>

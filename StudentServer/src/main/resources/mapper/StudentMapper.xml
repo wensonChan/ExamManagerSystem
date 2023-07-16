@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.learn.mapper.StudentMapper">
+
+    <select id="findAll" resultType="studentVO" parameterType="int">
+       select * from t_student where student_id = #{student_id}
+    </select>
+
+    <update id="updateSome" parameterType="Student">
+        update t_student set phone=#{phone},mail=#{mail}
+        <if test="password != null">,password=#{password}</if>
+        where student_id = #{student_id}
+    </update>
+
+    <select id="login" resultType="studentVO" parameterType="map">
+        select student_id,stu_name from t_student where stu_name = #{stu_name} and password = #{password}
+    </select>
+
+    <select id="idLogin" resultType="studentVO" parameterType="map">
+        select student_id,stu_name from t_student where student_id = #{loginId.student_id} and password = #{loginId.password}
+    </select>
+
+
+</mapper>

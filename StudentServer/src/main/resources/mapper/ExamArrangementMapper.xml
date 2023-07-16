@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.learn.mapper.ExamArrangementMapper">
+
+    <select id="findAll" resultType="examArrangementVO" parameterType="int">
+        select course_id,t_subject.`name` as 'course_name' , t_exam_schedule.exam_name ,room,start_time,end_time   from t_electives,t_exam_schedule,t_subject
+        where  t_electives.subject_id = t_exam_schedule.course_id and t_electives.subject_id = t_subject.subject_id and student_id = #{student_id}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.learn.mapper.ElectiveMapper">
+
+    <select id="findAll" resultType="electiveVO" parameterType="int">
+        select t_electives.subject_id,t_subject.`name` as 'course_name',t_teacher.`name` as 'teacher_name' , score from t_electives,t_subject,t_teacher
+        where t_subject.subject_id = t_electives.subject_id and t_subject.teacher_id = t_teacher.teacher_id and student_id = #{student_id}
+    </select>
+
+    <insert id="add" parameterType="Elective">
+        insert into t_electives (student_id,subject_id) values(#{student_id},#{subject_id})
+    </insert>
+
+    <delete id="deleteById" parameterType="Elective">
+        delete from t_electives where student_id = #{student_id} and subject_id=#{subject_id}
+    </delete>
+
+
+
+
+</mapper>

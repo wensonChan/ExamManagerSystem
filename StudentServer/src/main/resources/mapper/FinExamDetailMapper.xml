@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.learn.mapper.FinExamDetailMapper">
+
+    <select id="findAll" resultType="finExamDetailVO" parameterType="finExamDetail">
+        select t_question.title,t_question.option as 'content',stu_answer,t_exam_answer.get_score from t_exam_answer,t_question
+        where t_exam_answer.student_id = #{student_id} and t_exam_answer.title_id = t_question.question_id and course_id = #{subject_id}
+    </select>
+
+
+</mapper>
